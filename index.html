@@ -706,33 +706,64 @@ html[data-theme="dark"] .bigcode{color:#DCC8FF}
 #printArea{display:none}
 @media print{
   @page{size:A4 landscape;margin:9mm}
-  body{overflow:visible!important;background:#fff!important;display:block!important}
+  /* The print sheet is always light — never inherit the dark theme,
+     otherwise light text lands on a white page and disappears. */
+  html,body{overflow:visible!important;background:#fff!important;display:block!important;
+    color:#14102A!important;-webkit-text-fill-color:#14102A!important}
+  #printArea,#printArea *{color:#14102A;-webkit-text-fill-color:#14102A;
+    text-shadow:none!important;filter:none!important;background-image:none}
+  #printArea table.pr th,#printArea table.pr td{color:#14102A!important;-webkit-text-fill-color:#14102A!important}
   body::before,.hdr,.nav,.tools,.side,.ovl,.pop,.toast-w,.main{display:none!important}
   #printArea{display:block!important}
   .pr-hd{display:flex;align-items:center;gap:12px;border-bottom:2.5px solid #5B2C94;padding-bottom:8px;margin-bottom:10px}
   .pr-hd img{width:44px;height:44px}
-  .pr-hd h1{font-size:16pt;color:#3B1A63;font-weight:800}
-  .pr-hd p{font-size:8pt;color:#666}
+  #printArea .pr-hd h1{font-size:16pt;color:#3B1A63!important;-webkit-text-fill-color:#3B1A63!important;font-weight:800;
+    background:none!important}
+  .pr-hd p{font-size:8pt;color:#555!important;-webkit-text-fill-color:#555!important}
   .pr-hd .meta{margin-inline-start:auto;text-align:end;font-size:8.5pt;color:#444;font-weight:600}
-  table.pr{width:100%;border-collapse:collapse;font-size:7pt;table-layout:fixed}
-  table.pr th,table.pr td{border:.5pt solid #B9AECF;padding:1.6pt 1pt;text-align:center;overflow:hidden}
-  table.pr thead th{background:#EFE9F8!important;color:#3B1A63;font-weight:800;font-size:6.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table.pr th.nmp{width:78pt;text-align:start;padding-inline-start:4pt}
-  table.pr td.nmp{text-align:start;font-weight:700;font-size:7pt;padding-inline-start:4pt;background:#FAF8FD!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table.pr td.dpt{background:#5B2C94!important;color:#fff!important;font-weight:800;text-align:start;padding-inline-start:5pt;font-size:7.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table.pr td b.S{color:#B4590F} table.pr td b.L{color:#4A2179} table.pr td b.C{color:#B00062}
-  table.pr td b.W{color:#3730A3} table.pr td b.R{color:#475569} table.pr td b.D{color:#065F46} table.pr td b.E{color:#0E7490}
+  table.pr{width:100%;border-collapse:collapse;font-size:8.5pt;table-layout:fixed}
+  table.pr th,table.pr td{border:.6pt solid #9C8FBC;padding:2pt 1pt;text-align:center;overflow:hidden;
+    color:#14102A!important;-webkit-text-fill-color:#14102A!important}
+  table.pr thead th{background:#E4DAF4!important;color:#2A1147!important;-webkit-text-fill-color:#2A1147!important;
+    font-weight:800;font-size:7.5pt;line-height:1.25;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table.pr thead th .dnum{font-size:9pt;font-weight:800;display:block}
+  table.pr thead th .dwk{font-size:7pt;font-weight:800;display:block;opacity:.9}
+  table.pr thead th .dmo{font-size:6pt;font-weight:700;display:block;opacity:.75}
+  table.pr th.nmp{width:86pt;text-align:start;padding-inline-start:5pt;font-size:8pt}
+  table.pr td.nmp{text-align:start;font-weight:800;font-size:8.5pt;padding-inline-start:5pt;
+    color:#14102A!important;-webkit-text-fill-color:#14102A!important;
+    background:#F3EEFA!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printArea table.pr td.dpt{background:#5B2C94!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+    font-weight:800;text-align:start;padding-inline-start:6pt;font-size:9pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table.pr td b{font-size:10pt;font-weight:800;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pr-lg b{font-size:9pt}
+  #printArea .pr-lg b.S{color:#A34A00!important;-webkit-text-fill-color:#A34A00!important}
+  #printArea .pr-lg b.L{color:#3B1A63!important;-webkit-text-fill-color:#3B1A63!important}
+  #printArea .pr-lg b.C{color:#9C0057!important;-webkit-text-fill-color:#9C0057!important}
+  #printArea .pr-lg b.W{color:#2E2A9E!important;-webkit-text-fill-color:#2E2A9E!important}
+  #printArea .pr-lg b.R{color:#3C4655!important;-webkit-text-fill-color:#3C4655!important}
+  #printArea .pr-lg b.D{color:#04533C!important;-webkit-text-fill-color:#04533C!important}
+  #printArea .pr-lg b.E{color:#065E76!important;-webkit-text-fill-color:#065E76!important}
+  #printArea table.pr td b.S{color:#A34A00!important;-webkit-text-fill-color:#A34A00!important}
+  #printArea table.pr td b.L{color:#3B1A63!important;-webkit-text-fill-color:#3B1A63!important}
+  #printArea table.pr td b.C{color:#9C0057!important;-webkit-text-fill-color:#9C0057!important}
+  #printArea table.pr td b.W{color:#2E2A9E!important;-webkit-text-fill-color:#2E2A9E!important}
+  #printArea table.pr td b.R{color:#3C4655!important;-webkit-text-fill-color:#3C4655!important}
+  #printArea table.pr td b.D{color:#04533C!important;-webkit-text-fill-color:#04533C!important}
+  #printArea table.pr td b.E{color:#065E76!important;-webkit-text-fill-color:#065E76!important}
   table.pr td.wkp,table.pr th.wkp{background:#E6DFF3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   table.pr .holp{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   table.pr td.holp-R,table.pr th.holp-R{background:#D3D9E2!important;box-shadow:inset 1.8pt 0 0 #475569,inset -1.8pt 0 0 #475569}
   table.pr td.holp-D,table.pr th.holp-D{background:#C6E5D9!important;box-shadow:inset 1.8pt 0 0 #065F46,inset -1.8pt 0 0 #065F46}
   table.pr td.holp-E,table.pr th.holp-E{background:#C4E4F0!important;box-shadow:inset 1.8pt 0 0 #0E7490,inset -1.8pt 0 0 #0E7490}
   table.pr th.holp b{font-size:6.5pt}
-  .pr-lg{display:flex;gap:14px;font-size:8pt;margin-top:8px;font-weight:700}
-  .pr-ft{margin-top:9px;font-size:7pt;color:#888;border-top:.5pt solid #ccc;padding-top:5px;display:flex;justify-content:space-between;gap:10px}
+  .pr-lg{display:flex;gap:12px;font-size:8.5pt;margin-top:8px;font-weight:700;flex-wrap:wrap;
+    color:#14102A!important;-webkit-text-fill-color:#14102A!important}
+  .pr-ft{margin-top:9px;font-size:7.5pt;color:#555!important;-webkit-text-fill-color:#555!important;
+    border-top:.5pt solid #bbb;padding-top:5px;display:flex;justify-content:space-between;gap:10px}
   .pr-ft b{color:#5B2C94}
   .pr-hd .cred{font-size:7pt;color:#5B2C94;font-weight:700;margin-top:2px}
-  .pr-title{text-align:center;font-size:11pt;font-weight:800;color:#3B1A63;margin:2mm 0 1.5mm;
+  #printArea .pr-title{text-align:center;font-size:12pt;font-weight:800;color:#2A1147!important;-webkit-text-fill-color:#2A1147!important;margin:2mm 0 1.5mm;
     padding:1.6mm 0;border-block:.6pt solid #B9AECF;letter-spacing:.3px;
     background:#F6F2FB!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
@@ -1649,6 +1680,11 @@ const daysBetween=(a,b)=>Math.round((parseISO(b)-parseISO(a))/864e5)+1;
 const addDays=(s,n)=>{const d=parseISO(s); d.setDate(d.getDate()+n); return iso(d);};
 const DOWK=['sun','mon','tue','wed','thu','fri','sat'];
 const dowName=s=>I18N.t(DOWK[parseISO(s).getDay()]);
+/* single-letter day marks — Arabic words cannot simply be cut short */
+const DOW_AR=['ح','ن','ث','ر','خ','ج','س'];
+const DOW_EN=['Su','Mo','Tu','We','Th','Fr','Sa'];
+const dowMark=s=>{ const g=parseISO(s).getDay();
+  return I18N.lang==='en'?DOW_EN[g]:DOW_AR[g]; };
 const monShort=s=>I18N.t('ms'+parseISO(s).getMonth());
 const monFull=s=>I18N.t('m'+parseISO(s).getMonth());
 const isWeekend=s=>{const g=parseISO(s).getDay(); return g===5||g===6;}; // Fri/Sat
@@ -3301,9 +3337,11 @@ const IO = {
     h+='<table class="pr"><thead><tr><th class="nmp">'+esc(I18N.t('engineer'))+'</th>';
     const PH={}; ds.forEach(d=>{ const k=Data.dayLeave(d); if(k) PH[d]=k; });
     ds.forEach(d=>{ const hk=PH[d];
-      h+='<th class="'+(isWeekend(d)?'wkp ':'')+(hk?'holp holp-'+hk:'')+'">'
-        +esc(dowName(d).slice(0,I18N.lang==='ar'?6:3))+'<br>'+parseISO(d).getDate()+'<br>'+esc(monShort(d))
-        +(hk?'<br><b>'+ST[hk].lbl+'</b>':'')+'</th>'; });
+      h+='<th class="'+(isWeekend(d)?'wkp ':'')+(hk?'holp holp-'+hk:'')+'" title="'+esc(dowName(d))+'">'
+        +'<span class="dwk">'+esc(dowMark(d))+'</span>'
+        +'<span class="dnum">'+parseISO(d).getDate()+'</span>'
+        +'<span class="dmo">'+esc(monShort(d))+'</span>'
+        +(hk?'<b style="font-size:7pt">'+ST[hk].lbl+'</b>':'')+'</th>'; });
     const PO=Data.state.settings.pdf||{};
     const extra=(PO.types?SK.length:0)+(PO.duty?1:0)+(PO.hours?1:0);
     if(PO.types) h+=SK.map(k=>'<th>'+ST[k].lbl+'</th>').join('');
@@ -3325,8 +3363,11 @@ const IO = {
         h+='</tr>'; });
     });
     h+='</tbody></table>';
-    if(PO.legend!==false)
-      h+='<div class="pr-lg">'+SK.map(k=>'<span><b style="color:'+ST[k].col+'">'+ST[k].lbl+'</b> '+esc(shiftFull(k))+' ('+shiftHours(k)+esc(I18N.t('hUnit'))+')</span>').join('')+'</div>';
+    if(PO.legend!==false){
+      h+='<div class="pr-lg">'+SK.map(k=>'<span><b class="'+k+'">'+ST[k].lbl+'</b> '+esc(shiftFull(k))+' ('+shiftHours(k)+esc(I18N.t('hUnit'))+')</span>').join('')+'</div>';
+      h+='<div class="pr-lg" style="font-size:7.5pt;opacity:.85">'
+        +[0,1,2,3,4,5,6].map(g=>'<span><b>'+esc(I18N.lang==='en'?DOW_EN[g]:DOW_AR[g])+'</b> '+esc(I18N.t(DOWK[g]))+'</span>').join('')+'</div>';
+    }
     if(PO.note) h+='<div style="font-size:6.5pt;color:#777;margin-top:4px">'+esc(I18N.t('emptyDaysNote'))+'</div>';
     h+='<div class="pr-ft"><span>'+esc(I18N.t('system'))+'</span>'
       +'<span><b>'+esc(CREDIT.label)+' '+esc(CREDIT.name)+'</b></span>'
