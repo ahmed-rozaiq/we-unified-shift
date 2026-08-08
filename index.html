@@ -1275,6 +1275,22 @@ const T = {
     totalsShown:'تم إظهار عمود الإجمالي', totalsHidden:'تم إخفاء عمود الإجمالي — مساحة أكبر للأيام',
     totalsHint:'إخفاؤه يوسّع الجدول ويظهر أيامًا أكثر. التفضيل محفوظ لكل دور على حدة.',
     statsOnTap:'اضغط اسمك في الجدول لعرض إحصائياتك',
+    privTitle:'خصوصية بيانات الاتصال', privMask:'إخفاء الأرقام والبريد بالنجوم',
+    privMaskHint:'تظهر كـ •••• في كل الشاشات، وتُكشف مؤقتًا بزر العين لثلاثين ثانية.',
+    privMaskTruth:'الإخفاء يمنع القراءة من فوق كتفك فقط — البيانات تبقى مقروءة لمن يفتح تخزين المتصفح أو ملف النسخة الاحتياطية. للحماية الحقيقية فعّل التشفير بالأسفل.',
+    privEncHint:'التشفير الحقيقي: تُشفَّر الأرقام والبريد بمفتاح مشتق من كلمة سر لا تُحفَظ في أي مكان. بعدها لا يمكن قراءتها لا من التخزين ولا من النسخة الاحتياطية إلا بكلمة السر.',
+    privNoRecovery:'تحذير: لا توجد استعادة. إن نسيت كلمة السر تضيع الأرقام والبريد نهائيًا — احتفظ بها في مكان آمن.',
+    privPass:'كلمة السر', privPass2:'تأكيد كلمة السر', privEnable:'تفعيل التشفير', privDisable:'إلغاء التشفير',
+    privOn:'تم تفعيل التشفير', privOff:'تم إلغاء التشفير والبيانات ظاهرة الآن',
+    privOnNote:'التشفير مُفعّل. لإلغائه اكتب كلمة السر ثم اضغط إلغاء التشفير.',
+    privUnlock:'فتح البيانات', privLock:'إقفال', privLocked:'تم الإقفال', privLockedShort:'مقفلة',
+    privUnlocked:'مفتوحة لهذه الجلسة', privPlain:'بدون تشفير',
+    privUnlockHint:'اكتب كلمة السر لفك التشفير في هذه الجلسة فقط. تُقفل تلقائيًا عند إغلاق الصفحة.',
+    privWrong:'كلمة السر غير صحيحة', privWeak:'اجعل كلمة السر 6 أحرف على الأقل',
+    privMismatch:'كلمتا السر غير متطابقتين',
+    privLockedEdit:'افتح البيانات أولًا لتتمكن من التعديل',
+    privNoCrypto:'هذا المتصفح لا يدعم التشفير — افتح الصفحة في Chrome أو Safari حديث.',
+    reveal:'كشف مؤقت', hide:'إخفاء',
     waPick:'اختر جهة الإرسال من واتساب', waNoNumber:'لم يُسجَّل رقم لعضو اللجنة — سيفتح واتساب لتختار المحادثة',
     memberPhone:'رقم واتساب العضو', memberPhoneHint:'بصيغة دولية بدون + مثل 201001234567 — ليصل طلب المهندس إليه مباشرة.',
     reqCodeShort:'كود الطلب', reqCodeShortHint:'أرسل هذه الحروف الستة للجنة الوردية.',
@@ -1459,6 +1475,22 @@ const T = {
     totalsShown:'Totals column shown', totalsHidden:'Totals hidden — more room for the days',
     totalsHint:'Hiding it widens the roster and shows more days. Saved per role.',
     statsOnTap:'Tap your name in the roster to see your statistics',
+    privTitle:'Contact data privacy', privMask:'Mask phones and emails',
+    privMaskHint:'Shown as •••• everywhere, revealed for thirty seconds with the eye button.',
+    privMaskTruth:'Masking only stops someone reading over your shoulder — the values remain readable to anyone who opens browser storage or a backup file. For real protection turn on encryption below.',
+    privEncHint:'Real encryption: phones and emails are encrypted with a key derived from a passphrase that is never stored. After that they cannot be read from storage or from a backup without it.',
+    privNoRecovery:'Warning: there is no recovery. Forget the passphrase and the numbers are lost for good — keep it somewhere safe.',
+    privPass:'Passphrase', privPass2:'Confirm passphrase', privEnable:'Turn on encryption', privDisable:'Turn off encryption',
+    privOn:'Encryption is on', privOff:'Encryption removed — data is readable again',
+    privOnNote:'Encryption is on. To remove it, type the passphrase and press Turn off.',
+    privUnlock:'Unlock', privLock:'Lock', privLocked:'Locked', privLockedShort:'Locked',
+    privUnlocked:'Unlocked for this session', privPlain:'Not encrypted',
+    privUnlockHint:'Type the passphrase to decrypt for this session only. It re-locks when the page closes.',
+    privWrong:'Wrong passphrase', privWeak:'Use at least 6 characters',
+    privMismatch:'Passphrases do not match',
+    privLockedEdit:'Unlock the data before editing it',
+    privNoCrypto:'This browser cannot encrypt — open the page in a recent Chrome or Safari.',
+    reveal:'Reveal briefly', hide:'Hide',
     waPick:'Pick the chat in WhatsApp', waNoNumber:'No number saved for the committee member — WhatsApp will open so you can pick the chat',
     memberPhone:'Member WhatsApp number', memberPhoneHint:'International format without + e.g. 201001234567 — so requests reach them directly.',
     reqCodeShort:'Request code', reqCodeShortHint:'Send these six characters to the Shift Committee.',
@@ -1780,7 +1812,7 @@ const Data = {
       assign: {[c.id]: JSON.parse(JSON.stringify(SEED.assign))},
       swaps: [], history: [], emailQueue: [], requests: [], lastPublish:null,
       committee: COMMITTEE_SEED.map(c=>Object.assign({},c)),
-      engRemind: {},
+      engRemind: {}, privacy:null,
       waGroup:'', waGroupName:'',
       settings:{ nightReminder:true, leadHours:24, sendMode:'lead', sendTime:'18:00',
                  webhook:'', notifyOnSwap:true, density:'normal',
@@ -1919,8 +1951,9 @@ const Data = {
     const names={};
     this.engs(true).forEach(e=>{
       const st=this.stats(e.id);
-      if(!e.email) w.push({lvl:'warn',k:'wNoEmail',d:e.name,eng:e.id});
-      if(!e.email && st.L>0) w.push({lvl:'err',k:'wNightNoEmail',d:e.name+' — '+st.L+' × ل',eng:e.id});
+      const hasMail=(typeof Priv!=='undefined')?Priv.hasValue(e,'email'):!!e.email;
+      if(!hasMail) w.push({lvl:'warn',k:'wNoEmail',d:e.name,eng:e.id});
+      if(!hasMail && st.L>0) w.push({lvl:'err',k:'wNightNoEmail',d:e.name+' — '+st.L+' × ل',eng:e.id});
       if(st.total===0) w.push({lvl:'info',k:'wNoShifts',d:e.name,eng:e.id});
       const nk=normName(e.name); names[nk]=(names[nk]||0)+1;
     });
@@ -2170,7 +2203,7 @@ const Roster = {
           +' title="'+esc(e.name+(canS?'':' — '+I18N.t('ownStatsOnly')))+'">'
           +'<span class="av">'+esc(initials(e.name))+'</span>'
           +'<span class="txt"><span class="n1">'+esc(e.name)+'</span><span class="n2">'+deptChip(e.dept)
-            +(Auth.isAdmin()&&e.email?'<span class="mailx">'+esc(e.email)+'</span>':'')+'</span></span>'
+            +(Auth.isAdmin()&&Priv.hasValue(e,'email')?'<span class="mailx">'+esc(Priv.show(e,'email'))+'</span>':'')+'</span></span>'
           +(!e.email?'<svg class="nowarn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+IC.warn+'</svg>':'')
           +'</button></td>';
         ds.forEach(d=>{
@@ -2399,7 +2432,7 @@ const Side = {
       +'<div style="min-width:0"><h3>'+esc(e.name)+'</h3>'
       +'<p><b style="color:#fff;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:1px 8px;border-radius:99px;font-size:10px">'
       +esc(I18N.t('deptOf'))+' '+esc(I18N.dept(e.dept))+'</b> &nbsp;'
-      +(Auth.isAdmin()?(e.email?esc(e.email):'<span style="color:#FFD08A">'+esc(I18N.t('noEmail'))+'</span>'):'')+'</p></div></div></div>';
+      +(Auth.isAdmin()?(Priv.hasValue(e,'email')?esc(Priv.show(e,'email')):'<span style="color:#FFD08A">'+esc(I18N.t('noEmail'))+'</span>'):'')+'</p></div></div></div>';
     h+='<div class="side-bd">';
     h+='<div class="kpis">'
       +['S','L','C'].map(k=>'<div class="kpi '+k+'"><div class="v">'+st[k]+'</div><div class="l">'+ST[k].lbl+' · '+esc(shiftName(k))+'</div></div>').join('')
@@ -2499,7 +2532,7 @@ const Engineers = {
         g.list.forEach(e=>{ const st=Data.stats(e.id);
           h+='<div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-top:1px dashed var(--line);font-size:12px;flex-wrap:wrap">'
             +'<b style="flex:1;min-width:110px">'+esc(e.name)+'</b>'+deptChip(e.dept)
-            +'<span class="tag off">'+esc(e.email||I18N.t('noEmail'))+'</span>'
+            +'<span class="tag off">'+esc(Priv.show(e,'email')||I18N.t('noEmail'))+'</span>'
             +'<span class="tag info">'+SK.filter(k=>st[k]).map(k=>ST[k].lbl+st[k]).join(' ')+' = '+st.hours+esc(I18N.t('hUnit'))+'</span>'
             +'<button class="tbtn primary" onclick="Engineers.mergeInto(\''+e.id+'\')">'+esc(I18N.t('keepThis'))+'</button></div>'; });
         h+='</div>';
@@ -2510,6 +2543,9 @@ const Engineers = {
       +'<button class="btn btn-g" onclick="Engineers.renameAll()">'+svg('pencil',14)+esc(I18N.t('renameAll'))+'</button>'
       +'<div class="srch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>'
       +'<input value="'+esc(this._q||'')+'" placeholder="'+esc(I18N.t('searchEng'))+'" oninput="Engineers._q=this.value;Engineers.render()"></div>'
+      +'<button class="tbtn" title="'+esc(I18N.t(Priv.revealed()?'hide':'reveal'))+'" onclick="Priv.toggleReveal()">'
+        +svg(Priv.revealed()?'eyeoff':'eye',14)+esc(I18N.t(Priv.revealed()?'hide':'reveal'))+'</button>'
+      +(Priv.has()&&!Priv.unlocked()?'<button class="tbtn primary" onclick="Priv.askUnlock()">'+svg('key',14)+esc(I18N.t('privUnlock'))+'</button>':'')
       +'<button class="btn btn-p" onclick="Engineers.edit()">'+svg('plus',14)+esc(I18N.t('addEngineer'))+'</button></div>'
       +'<div class="panel-bd flush"><table class="dtable"><thead><tr>'
       +'<th>'+esc(I18N.t('engName'))+'</th><th>'+esc(I18N.t('dept'))+'</th><th>'+esc(I18N.t('email'))+'</th>'
@@ -2520,8 +2556,8 @@ const Engineers = {
       h+='<tr><td><div style="display:flex;align-items:center;gap:9px"><span class="ml-row"><span class="av" style="width:29px;height:29px;border-radius:9px;background:var(--grad-brand);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800">'+esc(initials(e.name))+'</span></span>'
         +'<b style="font-weight:700">'+esc(e.name)+'</b></div></td>'
         +'<td>'+deptChip(e.dept,{label:true})+'</td>'
-        +'<td>'+(e.email?'<span style="direction:ltr;display:inline-block">'+esc(e.email)+'</span>':'<span class="tag warn">'+svg('warn',11)+esc(I18N.t('noEmail'))+'</span>')+'</td>'
-        +'<td>'+(e.phone?'<span dir="ltr">'+esc(e.phone)+'</span>':'<span class="tag warn">'+esc(I18N.t('noPhone'))+'</span>')+'</td>'
+        +'<td>'+(Priv.hasValue(e,'email')?'<span style="direction:ltr;display:inline-block">'+esc(Priv.show(e,'email'))+'</span>':'<span class="tag warn">'+svg('warn',11)+esc(I18N.t('noEmail'))+'</span>')+'</td>'
+        +'<td>'+(Priv.hasValue(e,'phone')?'<span dir="ltr">'+esc(Priv.show(e,'phone'))+'</span>':'<span class="tag warn">'+esc(I18N.t('noPhone'))+'</span>')+'</td>'
         +'<td>'+(e.lang==='en'?'English':'العربية')+'</td>'
         +'<td>'+SK.filter(k=>st[k]).map(k=>'<span class="tag" style="background:var(--shift-'+k+'-bg);color:var(--shift-'+k+')" title="'+esc(shiftFull(k))+'">'+ST[k].lbl+' '+st[k]+'</span>').join(' ')
         +' <span class="tag info" style="font-weight:800">'+st.hours+esc(I18N.t('hUnit'))+'</span></td>'
@@ -2595,9 +2631,9 @@ const Engineers = {
           +'<option value="__new">+ '+esc(I18N.t('add'))+'…</option></select></div>'
         +'<div class="fld"><label>'+esc(I18N.t('prefLang'))+'</label><select id="fLang">'
           +'<option value="ar"'+(e.lang!=='en'?' selected':'')+'>العربية</option><option value="en"'+(e.lang==='en'?' selected':'')+'>English</option></select></div></div>'
-        +'<div class="fld"><label>'+esc(I18N.t('email'))+'</label><input id="fMail" type="email" dir="ltr" value="'+esc(e.email||'')+'" placeholder="name@te.eg">'
+        +'<div class="fld"><label>'+esc(I18N.t('email'))+'</label><input id="fMail" type="email" dir="ltr" value="'+esc(Priv.raw(e,'email'))+'" placeholder="name@te.eg">'
         +'<div class="hint">'+esc(I18N.t('wNightNoEmail'))+' — '+esc(I18N.t('nightReminder'))+'</div></div>'
-        +'<div class="fld"><label>'+esc(I18N.t('phone'))+'</label><input id="fPhone" dir="ltr" inputmode="numeric" value="'+esc(e.phone||'')+'" placeholder="201001234567">'
+        +'<div class="fld"><label>'+esc(I18N.t('phone'))+'</label><input id="fPhone" dir="ltr" inputmode="numeric" value="'+esc(Priv.raw(e,'phone'))+'" placeholder="201001234567">'
         +'<div class="hint">'+esc(I18N.t('phoneHint'))+'</div></div>'
         +'<div class="fld"><label style="display:flex;align-items:center;gap:10px;cursor:pointer"><span class="sw"><input type="checkbox" id="fAct"'+(e.active!==false?' checked':'')+'><span class="tr"></span></span>'
         +'<span>'+esc(I18N.t('active'))+'</span></label></div>',
@@ -2611,12 +2647,17 @@ const Engineers = {
     if(!Auth.can()) return;
     const name=$('#fName').value.trim(); if(!name){ $('#fName').focus(); return; }
     Data.snap('engineer');
-    const o={name, dept:$('#fDept').value, email:$('#fMail').value.trim(),
-      phone:($('#fPhone')?$('#fPhone').value.trim().replace(/[^0-9]/g,''):''), lang:$('#fLang').value, active:$('#fAct').checked};
-    if(id){ Object.assign(Data.eng(id),o); Data.state.history.push({id:uid('h'),ts:Date.now(),type:'engineer-edit',eng:id,note:name}); }
-    else { const ne=Object.assign({id:uid('e')},o); Data.state.engineers.push(ne); Data.ensureNos();
-      Data.state.history.push({id:uid('h'),ts:Date.now(),type:'engineer-add',eng:ne.id,note:name}); }
-    Data.save(); UI.closeModal(); UI.refreshAll(); UI.toast(I18N.t('saved'),'ok');
+    const em=$('#fMail').value.trim();
+    const ph=($('#fPhone')?$('#fPhone').value.trim().replace(/[^0-9]/g,''):'');
+    const o={name, dept:$('#fDept').value, lang:$('#fLang').value, active:$('#fAct').checked};
+    let rec;
+    if(id){ rec=Data.eng(id); Object.assign(rec,o); Data.state.history.push({id:uid('h'),ts:Date.now(),type:'engineer-edit',eng:id,note:name}); }
+    else { rec=Object.assign({id:uid('e')},o); Data.state.engineers.push(rec); Data.ensureNos();
+      Data.state.history.push({id:uid('h'),ts:Date.now(),type:'engineer-add',eng:rec.id,note:name}); }
+    Promise.resolve()
+      .then(()=>Priv.set(rec,'email',em))
+      .then(()=>Priv.set(rec,'phone',ph))
+      .then(()=>{ Data.saveNow(); UI.closeModal(); UI.refreshAll(); UI.toast(I18N.t('saved'),'ok'); });
   },
   toggleActive(id){ if(!Auth.can()) return; Data.snap('engineer'); const e=Data.eng(id); e.active=e.active===false;
     Data.save(); UI.refreshAll(); UI.toast(I18N.t('updated'),'ok'); },
@@ -2837,7 +2878,7 @@ const Notify = {
     [[rec.a,rec.aOld,rec.aNew],[rec.b,rec.bOld,rec.bNew]].forEach(([id,o,n])=>{
       const e=Data.eng(id); if(!e) return;
       const m=this.tpl('swap',e,{date:rec.date,old:o,neu:n,note:rec.note});
-      Data.state.emailQueue.push({id:uid('m'),ts:Date.now(),kind:'swap',eng:id,to:e.email||'',
+      Data.state.emailQueue.push({id:uid('m'),ts:Date.now(),kind:'swap',eng:id,to:Priv.raw(e,'email')||'',
         lang:e.lang||'ar',subject:m.subject,body:m.body,date:rec.date,status:e.email?'pending':'no-email'});
     });
     Data.save(); this.push();
@@ -2858,9 +2899,10 @@ const Notify = {
     const s=Data.state.settings; if(!s.nightReminder) return [];
     return this.nightUpcoming().map(x=>{
       const m=this.tpl('reminder',x.eng,{date:x.date});
-      return {eng:x.eng, date:x.date, to:x.eng.email||'', lang:x.eng.lang||'ar',
+      return {eng:x.eng, date:x.date, to:Priv.raw(x.eng,'email')||'', lang:x.eng.lang||'ar',
+        hasMail:Priv.hasValue(x.eng,'email'),
         subject:m.subject, body:m.body, sendAt:this.sendAt(x.date),
-        status: !x.eng.email ? 'no-email' : 'scheduled'};
+        status: !Priv.hasValue(x.eng,'email') ? 'no-email' : 'scheduled'};
     });
   },
   async push(){
@@ -3289,7 +3331,7 @@ const IO = {
       const list=engs.filter(e=>e.dept===dp); if(!list.length) return;
       aoa.push([I18N.t('deptOf')+': '+I18N.dept(dp)]);
       list.forEach(e=>{ const st=Data.stats(e.id);
-        aoa.push([I18N.dept(e.dept),e.name,e.email||''].concat(ds.map(d=>{const v=Data.get(e.id,d); return v?ST[v].lbl:'';}))
+        aoa.push([I18N.dept(e.dept),e.name,Priv.show(e,'email')].concat(ds.map(d=>{const v=Data.get(e.id,d); return v?ST[v].lbl:'';}))
           .concat(SK.map(k=>st[k])).concat([st.total,st.leave,st.hours])); });
     });
     aoa.push([]);
@@ -3308,7 +3350,7 @@ const IO = {
     const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Roster');
     // engineers sheet
     const e2=[[CREDIT.label+' '+CREDIT.name],[],[I18N.t('engName'),I18N.t('dept'),I18N.t('email'),I18N.t('phone'),I18N.t('prefLang'),I18N.t('status'),'ص','ل','C',I18N.t('total')]];
-    engs.forEach(e=>{const s=Data.stats(e.id); e2.push([e.name,I18N.dept(e.dept),e.email||'',e.phone||'',e.lang==='en'?'English':'العربية',e.active!==false?I18N.t('active'):I18N.t('inactive'),s.S,s.L,s.C,s.total]);});
+    engs.forEach(e=>{const s=Data.stats(e.id); e2.push([e.name,I18N.dept(e.dept),Priv.show(e,'email'),Priv.show(e,'phone'),e.lang==='en'?'English':'العربية',e.active!==false?I18N.t('active'):I18N.t('inactive'),s.S,s.L,s.C,s.total]);});
     const ws2=XLSX.utils.aoa_to_sheet(e2); ws2['!cols']=[{wch:20},{wch:12},{wch:26},{wch:16},{wch:10},{wch:10},{wch:5},{wch:5},{wch:5},{wch:7}];
     XLSX.utils.book_append_sheet(wb,ws2,'Engineers');
     // swaps sheet
@@ -3322,7 +3364,7 @@ const IO = {
   exportCSV(){
     const ds=Data.dates();
     let csv='﻿'+[I18N.t('dept'),I18N.t('engineer'),I18N.t('email')].concat(ds).join(',')+'\n';
-    Data.engs(false).forEach(e=>{ csv+=[I18N.dept(e.dept),e.name,e.email||''].concat(ds.map(d=>{const v=Data.get(e.id,d);return v?ST[v].lbl:'';})).join(',')+'\n'; });
+    Data.engs(false).forEach(e=>{ csv+=[I18N.dept(e.dept),e.name,Priv.show(e,'email')].concat(ds.map(d=>{const v=Data.get(e.id,d);return v?ST[v].lbl:'';})).join(',')+'\n'; });
     csv+='\n'+CREDIT.label+' '+CREDIT.name+'\n';
     this.download(new Blob([csv],{type:'text/csv;charset=utf-8'}),'WE-Roster-'+Data.cycle().start+'.csv');
   },
@@ -3458,6 +3500,7 @@ const Publish = {
   snapshot(){
     const c=Data.cycle(), ds=Data.dates(), A=Data.A();
     Data.ensureNos();
+    /* contact details never leave the committee's machine */
     const engs=Data.engs(true).map(e=>({id:e.id,no:e.no,name:e.name,dept:e.dept,active:true}));
     const assign={};
     engs.forEach(e=>{ const m=A[e.id]||{}, o={};
@@ -3744,6 +3787,7 @@ const Settings = {
       +'<span class="tag '+(Auth.isOwner()?'ok':'info')+'">'+(Auth.isOwner()?svg('crown',12)+' ':'')+esc(Auth.displayName())+'</span>'
       +'<button class="btn btn-g" onclick="UI.confirm(I18N.t(\'logoutConfirm\'),()=>Auth.logout())">'+svg('logout',14)+esc(I18N.t('logout'))+'</button></div>'
       +'<div class="panel-bd"><div class="note w">'+svg('warn')+'<div>'+esc(I18N.t('pinNotSecurity'))+'</div></div></div></div>';
+    h+=Priv.panel();
     h+=GateBG.panel();
     h+=Committee.render();
     h+='<div class="panel"><div class="panel-hd"><div class="ic">'+svg('info')+'</div><h3>'+esc(I18N.t('about'))+'</h3></div>'
@@ -4094,8 +4138,8 @@ const EngMode = {
         +'<div class="share" style="display:flex;gap:9px;flex-wrap:wrap">'
         +COMMITTEE_LIST().filter(c=>c.active!==false).map(cm=>{
           const ce=Data.state.engineers.find(e=>normName(e.name)===normName(cm.roster||''));
-          const ph=(cm.phone||(ce&&ce.phone)||'');
-          const em=(cm.email||(ce&&ce.email)||'');
+          const ph=(Priv.raw(cm,'phone')||(ce?Priv.raw(ce,'phone'):'')||'');
+          const em=(Priv.raw(cm,'email')||(ce?Priv.raw(ce,'email'):'')||'');
           return '<div style="flex:1;min-width:210px;border:1.5px solid var(--line);border-radius:14px;padding:11px">'
             +'<div style="font-size:12.5px;font-weight:800;margin-bottom:8px">'+svg(cm.owner?'crown':'shield',13)+' '+esc(I18N.lang==='en'?(cm.nameEn||cm.name):cm.name)+'</div>'
             +'<div style="display:flex;gap:7px;flex-wrap:wrap">'
@@ -4257,7 +4301,7 @@ const Send = {
   open(){ if(!Auth.can()) return; this.hub(); },
   draw(){
     const list=this.targets(), all=Data.engs(true);
-    const reach=e=>this.channel==='wa'?!!e.phone:!!e.email;
+    const reach=e=>this.channel==='wa'?Priv.hasValue(e,'phone'):Priv.hasValue(e,'email');
     const okN=list.filter(reach).length;
     const body='<div class="note i">'+svg('info')+'<div>'+esc(I18N.t('sendHint'))+'</div></div>'
       +'<div class="grid2">'
@@ -4277,8 +4321,8 @@ const Send = {
           const r=reach(e);
           return '<div class="ml-row"><span class="av">'+esc(initials(e.name))+'</span>'
             +'<span class="info"><b>'+esc(e.name)+'</b><span>'+esc(I18N.dept(e.dept))
-            +' · '+(this.channel==='wa'?(e.phone?'<span dir="ltr">'+esc(e.phone)+'</span>':'<b style="color:var(--warn)">'+esc(I18N.t('noPhone'))+'</b>')
-                                       :(e.email?'<span dir="ltr">'+esc(e.email)+'</span>':'<b style="color:var(--warn)">'+esc(I18N.t('noEmail'))+'</b>'))
+            +' · '+(this.channel==='wa'?(Priv.hasValue(e,'phone')?'<span dir="ltr">'+esc(Priv.show(e,'phone'))+'</span>':'<b style="color:var(--warn)">'+esc(I18N.t('noPhone'))+'</b>')
+                                       :(Priv.hasValue(e,'email')?'<span dir="ltr">'+esc(Priv.show(e,'email'))+'</span>':'<b style="color:var(--warn)">'+esc(I18N.t('noEmail'))+'</b>'))
             +'</span></span>'
             +'<button class="tbtn" onclick="Send.preview(\''+e.id+'\')">'+svg('info',13)+'</button>'
             +'<button class="tbtn primary" '+(r?'':'disabled')+' onclick="Send.one(\''+e.id+'\')">'+svg('send',13)+esc(I18N.t('sendOne'))+'</button></div>'; }).join('')
@@ -4299,14 +4343,17 @@ const Send = {
   },
   one(id){
     const e=Data.eng(id); if(!e) return;
+    if(Priv.has()&&!Priv.unlocked()){ Priv.askUnlock(); return; }
+    const ph=Priv.raw(e,'phone'), em=Priv.raw(e,'email');
     const msg=this.msgFor(e); this._last={msg};
-    if(this.channel==='wa'){ if(!e.phone){ UI.toast(I18N.t('noPhone'),'warn'); return; } this.wa(e.phone,msg); }
-    else { if(!e.email){ UI.toast(I18N.t('noEmail'),'warn'); return; } this.mail(e.email,this.S(e,'title'),msg); }
+    if(this.channel==='wa'){ if(!ph){ UI.toast(I18N.t('noPhone'),'warn'); return; } this.wa(ph,msg); }
+    else { if(!em){ UI.toast(I18N.t('noEmail'),'warn'); return; } this.mail(em,this.S(e,'title'),msg); }
     Data.state.history.push({id:uid('h'),ts:Date.now(),type:'send',eng:e.id,note:this.channel+'/'+this.kind});
     Data.save();
   },
   bulk(){
-    const list=this.targets().filter(e=>this.channel==='wa'?e.phone:e.email);
+    if(Priv.has()&&!Priv.unlocked()){ Priv.askUnlock(); return; }
+    const list=this.targets().filter(e=>this.channel==='wa'?Priv.raw(e,'phone'):Priv.raw(e,'email'));
     if(!list.length){ UI.toast(I18N.t('noData'),'warn'); return; }
     UI.confirm(I18N.t('sendAll')+' — '+list.length+' ('+I18N.t(this.channel==='wa'?'whatsapp':'emailCh')+')',()=>{
       list.forEach((e,i)=>setTimeout(()=>this.one(e.id), i*900));
@@ -4339,7 +4386,7 @@ const Committee = {
         +'<div class="mem-nm">'+esc(I18N.lang==='en'?(c.nameEn||c.name):c.name)+'</div>'
         +'<div class="mem-sub">'+esc(I18N.t('rosterName'))+': <b>'+esc(c.roster||'—')+'</b></div>'
         +'<div class="mem-pin">'+svg('key',12)+'<span>•••••••</span></div>'
-        +(c.phone?'<div class="mem-sub" style="margin-top:5px;direction:ltr;text-align:start">'+svg('wa',11)+' '+esc(c.phone)+'</div>'
+        +(Priv.hasValue(c,'phone')?'<div class="mem-sub" style="margin-top:5px;direction:ltr;text-align:start">'+svg('wa',11)+' '+esc(Priv.show(c,'phone'))+'</div>'
                  :'<div class="mem-sub" style="margin-top:5px;color:var(--warn)">'+svg('warn',11)+' '+esc(I18N.t('noPhone'))+'</div>');
       if(own) h+='<div class="mem-act">'
         +'<button class="tbtn" onclick="Committee.form(\''+c.id+'\')">'+svg('pencil',13)+esc(I18N.t('edit'))+'</button>'
@@ -4358,9 +4405,9 @@ const Committee = {
       body:(c.owner?'<div class="note i">'+svg('crown')+'<div>'+esc(I18N.t('owner'))+' — '+esc(I18N.t('cannotRemoveOwner'))+'</div></div>':'')
         +'<div class="fld"><label>'+esc(I18N.t('memberName'))+' *</label><input id="cmN" value="'+esc(c.name)+'" placeholder="م. ..."></div>'
         +'<div class="grid2"><div class="fld"><label>'+esc(I18N.t('memberPhone'))+'</label>'
-        +'<input id="cmPh" dir="ltr" inputmode="numeric" value="'+esc(c.phone||'')+'" placeholder="201001234567">'
+        +'<input id="cmPh" dir="ltr" inputmode="numeric" value="'+esc(Priv.raw(c,'phone'))+'" placeholder="201001234567">'
         +'<div class="hint">'+esc(I18N.t('memberPhoneHint'))+'</div></div>'
-        +'<div class="fld"><label>'+esc(I18N.t('email'))+'</label><input id="cmEm" dir="ltr" type="email" value="'+esc(c.email||'')+'"></div></div>'
+        +'<div class="fld"><label>'+esc(I18N.t('email'))+'</label><input id="cmEm" dir="ltr" type="email" value="'+esc(Priv.raw(c,'email'))+'"></div></div>'
         +'<div class="grid2"><div class="fld"><label>'+esc(I18N.t('memberNameEn'))+'</label><input id="cmNe" dir="ltr" value="'+esc(c.nameEn||'')+'"></div>'
         +'<div class="fld"><label>'+esc(I18N.t('rosterName'))+'</label>'
         +'<input list="engNames" id="cmR" value="'+esc(c.roster||'')+'" placeholder="'+esc(I18N.t('engineer'))+'">'
@@ -4389,8 +4436,8 @@ const Committee = {
     if(id){
       const c=Auth.list().find(x=>x.id===id);
       c.name=nm; c.nameEn=$('#cmNe').value.trim(); c.roster=$('#cmR').value.trim();
-      c.phone=($('#cmPh')?$('#cmPh').value.trim().replace(/[^0-9]/g,''):'');
-      c.email=($('#cmEm')?$('#cmEm').value.trim():'');
+      Priv.set(c,'phone',($('#cmPh')?$('#cmPh').value.trim().replace(/[^0-9]/g,''):''));
+      Priv.set(c,'email',($('#cmEm')?$('#cmEm').value.trim():''));
       if(h) c.h=h;
       if(!c.owner && roleSel) c.role=roleSel.value;
       Data.state.history.push({id:uid('h'),ts:Date.now(),type:'committee-edit',note:nm+(h?' · PIN':'')});
@@ -4398,9 +4445,11 @@ const Committee = {
     } else {
       Data.state.committee.push({id:uid('cm'),name:nm,nameEn:$('#cmNe').value.trim(),
         roster:$('#cmR').value.trim(),
-        phone:($('#cmPh')?$('#cmPh').value.trim().replace(/[^0-9]/g,''):''),
-        email:($('#cmEm')?$('#cmEm').value.trim():''),
+
         h,role:roleSel?roleSel.value:'member',active:true,added:Date.now()});
+      const nc=Data.state.committee[Data.state.committee.length-1];
+      Priv.set(nc,'phone',($('#cmPh')?$('#cmPh').value.trim().replace(/[^0-9]/g,''):''));
+      Priv.set(nc,'email',($('#cmEm')?$('#cmEm').value.trim():''));
       Data.state.history.push({id:uid('h'),ts:Date.now(),type:'committee-add',note:nm});
       UI.toast(I18N.t('memberAdded'),'ok');
     }
@@ -4693,6 +4742,194 @@ const ICS = {
   }
 };
 
+
+/* =====================================================================
+   CONTACT PRIVACY
+   ---------------------------------------------------------------------
+   Two independent layers, and it matters that they are not confused:
+
+   1) MASKING  — phones and emails are shown as ••••••. This stops
+      someone reading them over your shoulder. It is NOT protection:
+      the values still sit in browser storage in clear text.
+
+   2) ENCRYPTION — AES-GCM with a key derived from a passphrase that is
+      never stored anywhere. Once on, the stored data and every backup
+      contain ciphertext only. Lose the passphrase and the numbers are
+      gone for good — there is no recovery, by design.
+   ===================================================================== */
+const Priv = {
+  _key:null,            // in memory for this session only
+  _cache:{},            // id -> {phone,email} decrypted for this session
+  MASK:'••••••••',
+
+  has(){ return !!(Data.state && Data.state.privacy && Data.state.privacy.on); },
+  unlocked(){ return !!this._key; },
+  cryptoOK(){ try{ return !!(window.crypto && window.crypto.subtle && window.crypto.getRandomValues); }catch(e){ return false; } },
+  masking(){ const p=Data.state.privacy||{}; return p.mask!==false; },
+  revealed(){ return !!this._reveal; },
+
+  /* ---------- key derivation ---------- */
+  async _derive(pass,saltB64){
+    const enc=new TextEncoder();
+    const salt=Uint8Array.from(atob(saltB64),c=>c.charCodeAt(0));
+    const base=await crypto.subtle.importKey('raw',enc.encode(pass),'PBKDF2',false,['deriveKey']);
+    return crypto.subtle.deriveKey(
+      {name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},
+      base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+  },
+  _b64(u8){ let s=''; u8.forEach(b=>s+=String.fromCharCode(b)); return btoa(s); },
+  _u8(b64){ return Uint8Array.from(atob(b64),c=>c.charCodeAt(0)); },
+
+  async enc(text){
+    if(!this._key||!text) return '';
+    const iv=crypto.getRandomValues(new Uint8Array(12));
+    const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},this._key,new TextEncoder().encode(text));
+    return this._b64(iv)+'.'+this._b64(new Uint8Array(ct));
+  },
+  async dec(blob){
+    if(!this._key||!blob||blob.indexOf('.')<0) return '';
+    try{
+      const [i,c]=blob.split('.');
+      const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:this._u8(i)},this._key,this._u8(c));
+      return new TextDecoder().decode(pt);
+    }catch(e){ return ''; }
+  },
+
+  /* ---------- reading a value, whatever the mode ---------- */
+  raw(rec,field){
+    if(!rec) return '';
+    if(!this.has()) return rec[field]||'';
+    const c=this._cache[rec.id];
+    return (c && c[field]) ? c[field] : '';
+  },
+  /* what the screen shows */
+  show(rec,field){
+    const v=this.raw(rec,field);
+    if(this.has() && !this.unlocked()) return rec[field+'Enc']? this.MASK : '';
+    if(!v) return '';
+    if(this.masking() && !this.revealed()) return this.MASK;
+    return v;
+  },
+  hasValue(rec,field){
+    if(!rec) return false;
+    return this.has() ? !!rec[field+'Enc'] : !!rec[field];
+  },
+
+  /* ---------- turning it on ---------- */
+  async enable(pass){
+    if(!Auth.canManage()) return false;
+    if(!this.cryptoOK()){ UI.toast(I18N.t('privNoCrypto'),'err'); return false; }
+    if(!pass || pass.length<6){ UI.toast(I18N.t('privWeak'),'warn'); return false; }
+    const salt=this._b64(crypto.getRandomValues(new Uint8Array(16)));
+    this._key=await this._derive(pass,salt);
+    const check=await this.enc('WE-OK');
+    const targets=Data.state.engineers.concat(Data.state.committee||[]);
+    for(const r of targets){
+      for(const f of ['phone','email']){
+        if(r[f]){ r[f+'Enc']=await this.enc(r[f]); this._cache[r.id]=this._cache[r.id]||{}; this._cache[r.id][f]=r[f]; delete r[f]; }
+      }
+    }
+    Data.state.privacy={on:true,salt,check,mask:true,since:Date.now()};
+    Data.saveNow();
+    Data.state.history.push({id:uid('h'),ts:Date.now(),type:'privacy',note:'on'});
+    Data.saveNow(); UI.refreshAll();
+    UI.toast(I18N.t('privOn'),'ok');
+    return true;
+  },
+  async unlock(pass){
+    if(!this.has()) return false;
+    if(!this.cryptoOK()){ UI.toast(I18N.t('privNoCrypto'),'err'); return false; }
+    const p=Data.state.privacy;
+    const k=await this._derive(pass,p.salt);
+    this._key=k;
+    if(await this.dec(p.check)!=='WE-OK'){ this._key=null; UI.toast(I18N.t('privWrong'),'err'); return false; }
+    this._cache={};
+    const targets=Data.state.engineers.concat(Data.state.committee||[]);
+    for(const r of targets){
+      const o={};
+      for(const f of ['phone','email']) if(r[f+'Enc']) o[f]=await this.dec(r[f+'Enc']);
+      this._cache[r.id]=o;
+    }
+    UI.refreshAll(); UI.toast(I18N.t('privUnlocked'),'ok');
+    return true;
+  },
+  lock(){ this._key=null; this._cache={}; this._reveal=false; UI.refreshAll(); UI.toast(I18N.t('privLocked'),'ok'); },
+  async disable(pass){
+    if(!Auth.canManage()) return false;
+    if(!await this.unlock(pass)) return false;
+    const targets=Data.state.engineers.concat(Data.state.committee||[]);
+    targets.forEach(r=>{ const c=this._cache[r.id]||{};
+      ['phone','email'].forEach(f=>{ if(r[f+'Enc']){ r[f]=c[f]||''; delete r[f+'Enc']; } }); });
+    delete Data.state.privacy; this._key=null; this._cache={};
+    Data.saveNow(); UI.refreshAll(); UI.toast(I18N.t('privOff'),'ok');
+    return true;
+  },
+  /* store a value the right way for the current mode */
+  async set(rec,field,value){
+    if(!this.has()){ rec[field]=value||''; return; }
+    if(!this.unlocked()){ UI.toast(I18N.t('privLockedEdit'),'warn'); return; }
+    if(value){ rec[field+'Enc']=await this.enc(value);
+      this._cache[rec.id]=this._cache[rec.id]||{}; this._cache[rec.id][field]=value; }
+    else { delete rec[field+'Enc']; if(this._cache[rec.id]) delete this._cache[rec.id][field]; }
+    delete rec[field];
+  },
+
+  toggleMask(){ const p=Data.state.privacy||(Data.state.privacy={});
+    p.mask=!this.masking(); Data.save(); UI.refreshAll(); },
+  toggleReveal(){
+    if(this.has() && !this.unlocked()){ this.askUnlock(); return; }
+    this._reveal=!this._reveal; UI.refreshAll();
+    if(this._reveal) setTimeout(()=>{ if(this._reveal){ this._reveal=false; UI.refreshAll(); } },30000);
+  },
+
+  /* ---------- dialogs ---------- */
+  askUnlock(){
+    UI.modal({title:I18N.t('privUnlock'),icon:'key',
+      body:'<div class="note i">'+svg('lock')+'<div>'+esc(I18N.t('privUnlockHint'))+'</div></div>'
+        +'<div class="fld"><label>'+esc(I18N.t('privPass'))+'</label>'
+        +'<input id="pvPass" type="password" autocomplete="off" onkeydown="if(event.key===\'Enter\')Priv.doUnlock()"></div>',
+      footer:'<button class="btn btn-g" onclick="UI.closeModal()">'+esc(I18N.t('cancel'))+'</button>'
+        +'<button class="btn btn-p" onclick="Priv.doUnlock()">'+svg('key',14)+esc(I18N.t('privUnlock'))+'</button>'});
+  },
+  async doUnlock(){ const v=($('#pvPass')&&$('#pvPass').value)||'';
+    if(await this.unlock(v)) UI.closeModal(); },
+
+  panel(){
+    const on=this.has(), un=this.unlocked(), own=Auth.isOwner();
+    let h='<div class="panel"><div class="panel-hd"><div class="ic">'+svg('lock')+'</div>'
+      +'<h3>'+esc(I18N.t('privTitle'))+'</h3>'
+      +'<span class="tag '+(on?(un?'ok':'warn'):'off')+'">'
+        +esc(on?(un?I18N.t('privUnlocked'):I18N.t('privLockedShort')):I18N.t('privPlain'))+'</span>'
+      +(on&&!un?'<button class="btn btn-p" onclick="Priv.askUnlock()">'+svg('key',14)+esc(I18N.t('privUnlock'))+'</button>':'')
+      +(on&&un?'<button class="btn btn-g" onclick="Priv.lock()">'+svg('lock',14)+esc(I18N.t('privLock'))+'</button>':'')
+      +'</div><div class="panel-bd">';
+    h+='<div class="setrow"><div class="txt"><b>'+esc(I18N.t('privMask'))+'</b><span>'+esc(I18N.t('privMaskHint'))+'</span></div>'
+      +'<label class="sw"><input type="checkbox" '+(this.masking()?'checked':'')+' onchange="Priv.toggleMask()"><span class="tr"></span></label></div>';
+    h+='<div class="note w">'+svg('warn')+'<div>'+esc(I18N.t('privMaskTruth'))+'</div></div>';
+    if(!own){ h+='<div class="note i">'+svg('info')+'<div>'+esc(I18N.t('ownerOnly'))+'</div></div></div></div>'; return h; }
+    if(!this.cryptoOK()) h+='<div class="note e">'+svg('warn')+'<div>'+esc(I18N.t('privNoCrypto'))+'</div></div>';
+    else if(!on){
+      h+='<div class="note s">'+svg('lock')+'<div>'+esc(I18N.t('privEncHint'))+'</div></div>'
+        +'<div class="grid2"><div class="fld"><label>'+esc(I18N.t('privPass'))+'</label><input id="pvNew" type="password" autocomplete="new-password"></div>'
+        +'<div class="fld"><label>'+esc(I18N.t('privPass2'))+'</label><input id="pvNew2" type="password" autocomplete="new-password"></div></div>'
+        +'<div class="note e">'+svg('warn')+'<div>'+esc(I18N.t('privNoRecovery'))+'</div></div>'
+        +'<button class="btn btn-p" onclick="Priv.doEnable()">'+svg('lock',14)+esc(I18N.t('privEnable'))+'</button>';
+    } else {
+      h+='<div class="note s">'+svg('check')+'<div>'+esc(I18N.t('privOnNote'))+'</div></div>'
+        +'<div class="fld"><label>'+esc(I18N.t('privPass'))+'</label><input id="pvOff" type="password" autocomplete="off"></div>'
+        +'<button class="btn btn-d" onclick="Priv.doDisable()">'+esc(I18N.t('privDisable'))+'</button>';
+    }
+    h+='</div></div>';
+    return h;
+  },
+  async doEnable(){
+    const a=($('#pvNew')&&$('#pvNew').value)||'', b=($('#pvNew2')&&$('#pvNew2').value)||'';
+    if(a!==b){ UI.toast(I18N.t('privMismatch'),'warn'); return; }
+    await this.enable(a);
+  },
+  async doDisable(){ await this.disable(($('#pvOff')&&$('#pvOff').value)||''); }
+};
+
 /* ------------------ UI CONTROLLER ------------------ */
 const UI = {
   VIEWS:[['roster','roster'],['engineers','engineers'],['stats','stats'],['swaps','swaps'],['requests','inbox'],['notify','notify'],['history','history'],['settings','settings']],
@@ -4897,7 +5134,7 @@ const UI = {
   setTimeout(()=>{ try{ if(innerWidth>1100 && !localStorage.getItem('we_fit_once')){ localStorage.setItem('we_fit_once','1'); Roster.fit(); } }catch(e){} },250);
   let rt; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if(Roster.fitOn){Roster.fitOn=false;Roster.fit();} else Roster.render(); },220); });
   addEventListener('beforeunload',()=>Data.saveNow());
-  window.WE={Data,Roster,UI,I18N,IO,Side,Swap,Pop,Notify,Stats,Engineers,Cycles,History,Settings,Chart,T,SEED,normName,initials,deptColor,Publish,Requests,SwapCode,Auth,EngMode,Send,gateScene,GateBG,HQ_PHOTO,ICS,COMMITTEE_SEED,COMMITTEE_LIST,Committee,pinHash,
+  window.WE={Data,Roster,UI,I18N,IO,Side,Swap,Pop,Notify,Stats,Engineers,Cycles,History,Settings,Chart,T,SEED,normName,initials,deptColor,Publish,Requests,SwapCode,Auth,EngMode,Send,gateScene,GateBG,HQ_PHOTO,ICS,Priv,COMMITTEE_SEED,COMMITTEE_LIST,Committee,pinHash,
     SHIFT_TYPES,SK,ST,DUTY_K,LEAVE_K,shiftHours,shiftName,shiftFull,DEF_HOURS};
   const _d=Data.findDups();
   if(_d.length){ const ex=_d.some(g=>g.exact);
