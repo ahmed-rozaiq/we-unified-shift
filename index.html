@@ -1231,7 +1231,7 @@ const T = {
     nav_notify:'التنبيهات', nav_history:'السجل', nav_settings:'الإعدادات', nav_requests:'طلبات المهندسين',
     publish:'نشر نسخة المهندسين', publishNow:'إنشاء الملف الآن', published:'تم النشر',
     publishMsg:'يُنتج ملف HTML مستقل يحتوي الجدول الحالي، ترسله للمهندسين. يفتحونه للمشاهدة فقط ولا يستطيعون التعديل. عند كل تحديث للجدول أعد النشر وأرسل الملف الجديد.',
-    publishPrivacy:'النسخة المرسلة تحتوي الأسماء والإدارات والورديات وأرقام الهواتف والبريد الإلكتروني. لا تحتوي إعدادات الإدارة أو Webhook أو سجل التعديلات.',
+    publishPrivacy:'النسخة المرسلة تحتوي الأسماء والإدارات والورديات فقط — بدون إعدادات أو Webhook أو سجل التعديلات.', pubContacts:'تضمين أرقام الهواتف والبريد في نسخة المهندسين', pubContactsHint:'مطفأ افتراضيًا. تشغيله يضع بيانات اتصال الخمسة عشر مهندسًا داخل الملف المنشور.', pubContactsWarn:'تحذير: إن رفعت هذه النسخة على رابط عام، تصبح أرقام هواتف وبريد كل المهندسين متاحة لأي شخص يفتح الرابط أو ينزّل الملف. لا تفعّله إلا إذا كان التوزيع داخليًا ومحدودًا.',
     pasteCode:'لصق كود طلب', pasteHint:'اكتب أو الصق كود المهندس المكوّن من 6 حروف. النظام يقرأه ويعرض قبل/بعد، ولا يُنفَّذ أي تبديل قبل ضغطك على التأكيد.',
     pasteMulti:'يمكنك لصق عدة أكواد معًا أو رسالة الواتساب كاملة — سيستخرج النظام كل الأكواد منها. والأكواد الطويلة القديمة ما زالت مقبولة.',
     readCode:'قراءة الكود', badCode:'الكود غير صالح أو غير مكتمل', reqCode:'كود الطلب',
@@ -1370,7 +1370,7 @@ const T = {
     cycleWarnMsg:'عدد أيام الدورة {n} يومًا وليس 30. يمكنك الاستمرار إذا أردت.',
     open:'فتح', duplicate:'نسخ الدورة', del:'حذف', save:'حفظ', cancel:'إلغاء', confirm:'تأكيد', edit:'تعديل',
     add:'إضافة', close:'إغلاق', apply:'تطبيق', reset:'إعادة تعيين', copy:'نسخ', paste:'لصق', fill:'ملء',
-    addEngineer:'إضافة مهندس', editEngineer:'تعديل مهندس', engName:'اسم المهندس', email:'البريد الإلكتروني',
+    addEngineer:'إضافة مهندس', editEngineer:'تعديل مهندس', engName:'الاسم في الجدول (مختصر)', fullNameLbl:'الاسم الكامل', fullNameHint2:'يُحفظ ويظهر في بياناته والرسائل والتقويم — والجدول يبقى بالاسم المختصر.', email:'البريد الإلكتروني',
     prefLang:'لغة التنبيهات المفضلة', arabic:'العربية', english:'English', active:'نشط', inactive:'غير نشط',
     status:'الحالة', actions:'إجراءات', deactivate:'إيقاف', activate:'تفعيل', noEmail:'بدون بريد',
     stats:'الإحصائيات', selectEng:'اختر المهندس', shiftDays:'أيام الورديات', distribution:'توزيع الورديات',
@@ -1431,7 +1431,7 @@ const T = {
     nav_notify:'Notifications', nav_history:'History', nav_settings:'Settings', nav_requests:'Engineer Requests',
     publish:'Publish engineer copy', publishNow:'Generate file now', published:'Published',
     publishMsg:'Generates a standalone HTML file containing the current roster, which you send to the engineers. They can only view it — no editing. Re-publish and resend after each update.',
-    publishPrivacy:'The published copy includes names, departments, shifts, phone numbers and email addresses. Admin settings, webhook and edit history are excluded.',
+    publishPrivacy:'The published copy carries names, departments and shifts only — no settings, webhook or edit history.', pubContacts:'Include phone numbers and emails in the engineer copy', pubContactsHint:'Off by default. Turning it on puts every engineer contact detail inside the published file.', pubContactsWarn:'Warning: on a public link every engineer phone and email becomes available to anyone who opens or downloads it. Enable only for limited internal distribution.',
     pasteCode:'Paste request code', pasteHint:'Type or paste the engineer 6-character code. It is decoded and shown as BEFORE/AFTER; nothing is swapped until you press Confirm.',
     pasteMulti:'You may paste several codes at once, or a whole message — every code will be extracted.',
     readCode:'Read code', badCode:'Invalid or incomplete code', reqCode:'Request code',
@@ -1570,7 +1570,7 @@ const T = {
     cycleWarnMsg:'This cycle is {n} days, not 30. You may continue if you wish.',
     open:'Open', duplicate:'Duplicate', del:'Delete', save:'Save', cancel:'Cancel', confirm:'Confirm', edit:'Edit',
     add:'Add', close:'Close', apply:'Apply', reset:'Reset', copy:'Copy', paste:'Paste', fill:'Fill',
-    addEngineer:'Add Engineer', editEngineer:'Edit Engineer', engName:'Engineer name', email:'Email address',
+    addEngineer:'Add Engineer', editEngineer:'Edit Engineer', engName:'Name in the roster (short)', fullNameLbl:'Full name', fullNameHint2:'Stored and shown in details, messages and the calendar — the roster keeps the short name.', email:'Email address',
     prefLang:'Preferred notification language', arabic:'العربية', english:'English', active:'Active', inactive:'Inactive',
     status:'Status', actions:'Actions', deactivate:'Deactivate', activate:'Activate', noEmail:'No email',
     stats:'Statistics', selectEng:'Select engineer', shiftDays:'Shift days', distribution:'Shift distribution',
@@ -1653,7 +1653,7 @@ const DEF_HOURS = SHIFT_TYPES.reduce((o,t)=>(o[t.k]=t.h,o),{});
 const SHIFT_LBL = {ar:SHIFT_TYPES.reduce((o,t)=>(o[t.k]=t.lbl,o),{}),
                    en:SHIFT_TYPES.reduce((o,t)=>(o[t.k]=t.lbl,o),{})};
 const CREDIT = {label:'Powered By', name:'Eng. Ahmed Rozaiq'};
-const BUILD = '2026-08-08 13:51';
+const BUILD = '2026-08-16 14:34';
 /* distinct, WE-harmonious accents per department (never clash with ص/ل/C badges) */
 const DEPT_PALETTE = [
   {bg:'#E0F2F4', fg:'#0E7490', bd:'#8CCBD4', dbg:'#0C3B44', dfg:'#67D3E4'},
@@ -1722,6 +1722,9 @@ const monFull=s=>I18N.t('m'+parseISO(s).getMonth());
 const isWeekend=s=>{const g=parseISO(s).getDay(); return g===5||g===6;}; // Fri/Sat
 const fmtDate=s=>{const d=parseISO(s); return d.getDate()+' '+monFull(s)+' '+d.getFullYear();};
 const fmtShort=s=>{const d=parseISO(s); return d.getDate()+' '+monShort(s);};
+/* the roster shows the short name; details and messages use the full one */
+const fullName=e=>(e&&(e.fullName||e.name))||'';
+const shortName=e=>(e&&e.name)||'';
 const initials=n=>{const p=String(n).trim().split(/\s+/);
   if(p.length>1 && p[1]) return (p[0][0]||'')+(p[1][0]||'');
   return (p[0]||'').slice(0,2);};
@@ -1733,7 +1736,7 @@ const normName = n => String(n||'')
   .replace(/\u0649/g,'\u064A').replace(/\u0626/g,'\u064A')
   .replace(/\u0629/g,'\u0647').replace(/\u0624/g,'\u0648')
   .replace(/\s+/g,' ').trim().toLowerCase();
-const SEED = {"cycle":{"id":"c1","name":"29 يوليو – 27 أغسطس 2026","start":"2026-07-29","end":"2026-08-27"},"depts":["المنوفية","الغربية","القليوبية"],"engineers":[{"id":"e1","name":"عمران","dept":"المنوفية","email":"","lang":"ar","active":true},{"id":"e2","name":"عرفه","dept":"المنوفية","email":"","lang":"ar","active":true},{"id":"e3","name":"محمود","dept":"المنوفية","email":"","lang":"ar","active":true},{"id":"e4","name":"جمال","dept":"المنوفية","email":"","lang":"ar","active":true},{"id":"e5","name":"بدر","dept":"المنوفية","email":"","lang":"ar","active":true},{"id":"e6","name":"عابدين","dept":"المنوفية","email":"","lang":"ar","active":true},{"id":"e7","name":"رزيق","dept":"الغربية","email":"","lang":"ar","active":true},{"id":"e8","name":"المحمدي","dept":"الغربية","email":"","lang":"ar","active":true},{"id":"e9","name":"حجاج","dept":"الغربية","email":"","lang":"ar","active":true},{"id":"e10","name":"مصطفى","dept":"الغربية","email":"","lang":"ar","active":true},{"id":"e11","name":"غادة","dept":"الغربية","email":"","lang":"ar","active":true},{"id":"e12","name":"ايمان","dept":"القليوبية","email":"","lang":"ar","active":true},{"id":"e13","name":"عبير","dept":"القليوبية","email":"","lang":"ar","active":true},{"id":"e14","name":"سحر","dept":"القليوبية","email":"","lang":"ar","active":true},{"id":"e15","name":"هاني","dept":"القليوبية","email":"","lang":"ar","active":true}],"assign":{"e1":{"2026-07-31":"L","2026-08-07":"L","2026-08-21":"L","2026-08-16":"C"},"e2":{"2026-08-02":"L","2026-08-09":"L","2026-08-19":"L","2026-07-29":"C","2026-08-12":"C","2026-08-23":"C"},"e3":{"2026-08-04":"L","2026-08-18":"L","2026-08-25":"L","2026-07-30":"C","2026-08-27":"C"},"e4":{"2026-08-08":"L","2026-08-15":"L","2026-08-22":"L","2026-08-06":"C"},"e5":{"2026-08-10":"L","2026-08-17":"L","2026-08-24":"L","2026-08-01":"C","2026-08-05":"C"},"e6":{"2026-08-11":"L","2026-08-13":"L","2026-08-14":"L","2026-08-03":"C","2026-08-26":"C"},"e7":{"2026-07-29":"L","2026-08-12":"L","2026-08-16":"L","2026-07-31":"C","2026-08-09":"C","2026-08-14":"C","2026-08-25":"C"},"e8":{"2026-07-30":"L","2026-08-06":"L","2026-08-27":"L","2026-08-04":"C","2026-08-10":"C","2026-08-17":"C","2026-08-22":"C"},"e9":{"2026-08-01":"L","2026-08-05":"L","2026-08-23":"L","2026-08-02":"C","2026-08-08":"C","2026-08-11":"C","2026-08-13":"C","2026-08-18":"C","2026-08-21":"C"},"e10":{"2026-08-03":"L","2026-08-20":"L","2026-08-26":"L","2026-08-07":"C","2026-08-15":"C","2026-08-19":"C","2026-08-24":"C"},"e11":{"2026-07-31":"S","2026-08-01":"S","2026-08-27":"S"},"e12":{"2026-08-07":"S","2026-08-08":"S"},"e13":{"2026-08-14":"S","2026-08-15":"S"},"e14":{"2026-08-21":"S","2026-08-22":"S"},"e15":{"2026-07-29":"C"}},"conflicts":[{"e":"عمران","d":"2026-07-31","kept":"L","dropped":"C"},{"e":"عمران","d":"2026-08-07","kept":"L","dropped":"C"},{"e":"جمال","d":"2026-08-08","kept":"L","dropped":"C"},{"e":"عابدين","d":"2026-08-14","kept":"L","dropped":"C"},{"e":"جمال","d":"2026-08-15","kept":"L","dropped":"C"},{"e":"عمران","d":"2026-08-21","kept":"L","dropped":"C"},{"e":"جمال","d":"2026-08-22","kept":"L","dropped":"C"}]};
+const SEED = {"cycle":{"id":"c1","name":"29 يوليو – 27 أغسطس 2026","start":"2026-07-29","end":"2026-08-27"},"depts":["المنوفية","الغربية","القليوبية"],"engineers":[{"id":"e1","name":"عمران","dept":"المنوفية","email":"ahmad.omran@te.eg","lang":"ar","active":true,"fullName":"أحمد عمران","phone":"201551919118"},{"id":"e2","name":"عرفه","dept":"المنوفية","email":"mohamed.a.ibrahim@te.eg","lang":"ar","active":true,"fullName":"محمد عرفه","phone":"201552002080"},{"id":"e3","name":"محمود","dept":"المنوفية","email":"mahmoud.elsayed@te.eg","lang":"ar","active":true,"fullName":"محمود رمضان","phone":"201551208000"},{"id":"e4","name":"جمال","dept":"المنوفية","email":"gamal.kotb@te.eg","lang":"ar","active":true,"fullName":"جمال سلطان","phone":"201550555213"},{"id":"e5","name":"بدر","dept":"المنوفية","email":"mahamed.hassan@te.eg","lang":"ar","active":true,"fullName":"محمد بدر","phone":"201552075000"},{"id":"e6","name":"عابدين","dept":"المنوفية","email":"ahmed.abden@te.eg","lang":"ar","active":true,"fullName":"أحمد عابدين","phone":"201552070777"},{"id":"e7","name":"رزيق","dept":"الغربية","email":"ahmed.rozik@te.eg","lang":"ar","active":true,"fullName":"أحمد رزيق","phone":"201554446554"},{"id":"e8","name":"المحمدي","dept":"الغربية","email":"ahmed.fatouh@te.eg","lang":"ar","active":true,"fullName":"أحمد المحمدي","phone":"201552505552"},{"id":"e9","name":"حجاج","dept":"الغربية","email":"gamal.hagag@te.eg","lang":"ar","active":true,"fullName":"جمال حجاج","phone":"201557735575"},{"id":"e10","name":"مصطفى","dept":"الغربية","email":"mostafa.abdelhamied@te.eg","lang":"ar","active":true,"fullName":"مصطفى حماده","phone":"201551115474"},{"id":"e11","name":"غادة","dept":"الغربية","email":"ghada.wafi@te.eg","lang":"ar","active":true,"fullName":"غادة وافي","phone":"201555895475"},{"id":"e12","name":"ايمان","dept":"القليوبية","email":"eman.abdelalem@te.eg","lang":"ar","active":true,"fullName":"إيمان عبد العليم","phone":"201551117491"},{"id":"e13","name":"عبير","dept":"القليوبية","email":"abeer.awad@te.eg","lang":"ar","active":true,"fullName":"عبير عوض","phone":"201011104240"},{"id":"e14","name":"سحر","dept":"القليوبية","email":"sahar.mobaraksahar.mobarak@te.eg","lang":"ar","active":true,"fullName":"سحر مبارك","phone":"201555978817"},{"id":"e15","name":"هاني","dept":"القليوبية","email":"hany.mostafa@te.eg","lang":"ar","active":true,"fullName":"هاني البربرى","phone":"201551206000"}],"assign":{"e1":{"2026-07-31":"L","2026-08-07":"L","2026-08-21":"L","2026-08-16":"C"},"e2":{"2026-08-02":"L","2026-08-09":"L","2026-08-19":"L","2026-07-29":"C","2026-08-12":"C","2026-08-23":"C"},"e3":{"2026-08-04":"L","2026-08-18":"L","2026-08-25":"L","2026-07-30":"C","2026-08-27":"C"},"e4":{"2026-08-08":"L","2026-08-15":"L","2026-08-22":"L","2026-08-06":"C"},"e5":{"2026-08-10":"L","2026-08-17":"L","2026-08-24":"L","2026-08-01":"C","2026-08-05":"C"},"e6":{"2026-08-11":"L","2026-08-13":"L","2026-08-14":"L","2026-08-03":"C","2026-08-26":"C"},"e7":{"2026-07-29":"L","2026-08-12":"L","2026-08-16":"L","2026-07-31":"C","2026-08-09":"C","2026-08-14":"C","2026-08-25":"C"},"e8":{"2026-07-30":"L","2026-08-06":"L","2026-08-27":"L","2026-08-04":"C","2026-08-10":"C","2026-08-17":"C","2026-08-22":"C"},"e9":{"2026-08-01":"L","2026-08-05":"L","2026-08-23":"L","2026-08-02":"C","2026-08-08":"C","2026-08-11":"C","2026-08-13":"C","2026-08-18":"C","2026-08-21":"C"},"e10":{"2026-08-03":"L","2026-08-20":"L","2026-08-26":"L","2026-08-07":"C","2026-08-15":"C","2026-08-19":"C","2026-08-24":"C"},"e11":{"2026-07-31":"S","2026-08-01":"S","2026-08-27":"S"},"e12":{"2026-08-07":"S","2026-08-08":"S"},"e13":{"2026-08-14":"S","2026-08-15":"S"},"e14":{"2026-08-21":"S","2026-08-22":"S"},"e15":{"2026-07-29":"C"}},"conflicts":[{"e":"عمران","d":"2026-07-31","kept":"L","dropped":"C"},{"e":"عمران","d":"2026-08-07","kept":"L","dropped":"C"},{"e":"جمال","d":"2026-08-08","kept":"L","dropped":"C"},{"e":"عابدين","d":"2026-08-14","kept":"L","dropped":"C"},{"e":"جمال","d":"2026-08-15","kept":"L","dropped":"C"},{"e":"عمران","d":"2026-08-21","kept":"L","dropped":"C"},{"e":"جمال","d":"2026-08-22","kept":"L","dropped":"C"}]};
 const LOGO = 'data:image/png;base64,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';
 
 /* ---- Swap request codes (shared format with the engineer view) ---- */
@@ -1796,6 +1799,31 @@ const SwapCode = {
   }
 };
 
+/* Contact sheet — «بيانات للوردية» · matched by department + short name.
+   Applied once to rosters already saved in a browser, so nobody has to
+   retype anything. Existing values are never overwritten. */
+const CONTACTS = {"بدر":{"dept":"المنوفية","full":"محمد بدر","phone":"201552075000","email":"mahamed.hassan@te.eg"},"عابدين":{"dept":"المنوفية","full":"أحمد عابدين","phone":"201552070777","email":"ahmed.abden@te.eg"},"عرفه":{"dept":"المنوفية","full":"محمد عرفه","phone":"201552002080","email":"mohamed.a.ibrahim@te.eg"},"جمال":{"dept":"المنوفية","full":"جمال سلطان","phone":"201550555213","email":"gamal.kotb@te.eg"},"محمود":{"dept":"المنوفية","full":"محمود رمضان","phone":"201551208000","email":"mahmoud.elsayed@te.eg"},"عمران":{"dept":"المنوفية","full":"أحمد عمران","phone":"201551919118","email":"ahmad.omran@te.eg"},"المحمدي":{"dept":"الغربية","full":"أحمد المحمدي","phone":"201552505552","email":"ahmed.fatouh@te.eg"},"رزيق":{"dept":"الغربية","full":"أحمد رزيق","phone":"201554446554","email":"ahmed.rozik@te.eg"},"مصطفى":{"dept":"الغربية","full":"مصطفى حماده","phone":"201551115474","email":"mostafa.abdelhamied@te.eg"},"حجاج":{"dept":"الغربية","full":"جمال حجاج","phone":"201557735575","email":"gamal.hagag@te.eg"},"غادة":{"dept":"الغربية","full":"غادة وافي","phone":"201555895475","email":"ghada.wafi@te.eg"},"هاني":{"dept":"القليوبية","full":"هاني البربرى","phone":"201551206000","email":"hany.mostafa@te.eg"},"ايمان":{"dept":"القليوبية","full":"إيمان عبد العليم","phone":"201551117491","email":"eman.abdelalem@te.eg"},"عبير":{"dept":"القليوبية","full":"عبير عوض","phone":"201011104240","email":"abeer.awad@te.eg"},"سحر":{"dept":"القليوبية","full":"سحر مبارك","phone":"201555978817","email":"sahar.mobaraksahar.mobarak@te.eg"}};
+function applyContacts(){
+  if(!Data.state || !Data.state.engineers) return 0;
+  let n=0;
+  Data.state.engineers.forEach(e=>{
+    const c=CONTACTS[e.name] || CONTACTS[normName(e.name)];
+    if(!c || c.dept!==e.dept) return;
+    if(!e.fullName){ e.fullName=c.full; n++; }
+    if(!e.phone && !e.phoneEnc){ e.phone=c.phone; n++; }
+    if(!e.email && !e.emailEnc){ e.email=c.email; n++; }
+  });
+  /* the two committee members reuse their own roster record */
+  (Data.state.committee||[]).forEach(cm=>{
+    const c=CONTACTS[cm.roster];
+    if(!c) return;
+    if(!cm.phone && !cm.phoneEnc) { cm.phone=c.phone; n++; }
+    if(!cm.email && !cm.emailEnc) { cm.email=c.email; n++; }
+    if(!cm.fullName) cm.fullName=c.full;
+  });
+  return n;
+}
+
 /* ------------------ data layer ------------------ */
 const Data = {
   KEY:'we_mdelta_roster_v1',
@@ -1818,13 +1846,19 @@ const Data = {
                  webhook:'', notifyOnSwap:true, density:'normal',
                  hours:Object.assign({},DEF_HOURS), nightStart:'16:00',
                  pdf:{types:false,duty:false,hours:false,legend:true,note:false,depts:true},
+                 pubContacts:false,
                  showTotals:{committee:true,engineer:true} },
       selectedEng:null, compare:[], view:'roster',
       filterShift:SK.reduce((o,k)=>(o[k]=1,o),{})
     };
   },
   load(){
-    const done=()=>{ this.ensureNos(); };
+    const done=()=>{ this.ensureNos();
+      if(!this.state.contactsV || this.state.contactsV<1){
+        const n=applyContacts();
+        this.state.contactsV=1;
+        if(n) console.log('contact sheet applied to',n,'fields');
+      } };
     try{ const r=localStorage.getItem(this.KEY);
       if(r){ const s=JSON.parse(r); const b=this.blank();
         this.state=Object.assign(b,s);
@@ -1856,6 +1890,7 @@ const Data = {
         note:'تعارض في الملف الأصلي (ل + C) — تم الاحتفاظ بالوردية الليلية'});
     });
     this.ensureNos();
+    applyContacts(); this.state.contactsV=1;
     this.save();
   },
   save(){ clearTimeout(this._saveT);
@@ -2429,7 +2464,7 @@ const Side = {
     let h='';
     h+='<div class="side-hd"><button class="side-x" onclick="Side.close()">'+svg('x',15)+'</button>'
       +'<div class="row"><div class="av">'+esc(initials(e.name))+'</div>'
-      +'<div style="min-width:0"><h3>'+esc(e.name)+'</h3>'
+      +'<div style="min-width:0"><h3>'+esc(fullName(e))+'</h3>'
       +'<p><b style="color:#fff;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:1px 8px;border-radius:99px;font-size:10px">'
       +esc(I18N.t('deptOf'))+' '+esc(I18N.dept(e.dept))+'</b> &nbsp;'
       +(Auth.isAdmin()?(Priv.hasValue(e,'email')?esc(Priv.show(e,'email')):'<span style="color:#FFD08A">'+esc(I18N.t('noEmail'))+'</span>'):'')+'</p></div></div></div>';
@@ -2554,7 +2589,9 @@ const Engineers = {
     list.forEach(e=>{
       const st=Data.stats(e.id);
       h+='<tr><td><div style="display:flex;align-items:center;gap:9px"><span class="ml-row"><span class="av" style="width:29px;height:29px;border-radius:9px;background:var(--grad-brand);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800">'+esc(initials(e.name))+'</span></span>'
-        +'<b style="font-weight:700">'+esc(e.name)+'</b></div></td>'
+        +'<span><b style="font-weight:800;display:block">'+esc(fullName(e))+'</b>'
+        +(e.fullName&&e.fullName!==e.name?'<small style="font-size:10px;color:var(--ink-3)">'+esc(I18N.t('engName'))+': '+esc(e.name)+'</small>':'')
+        +'</span></div></td>'
         +'<td>'+deptChip(e.dept,{label:true})+'</td>'
         +'<td>'+(Priv.hasValue(e,'email')?'<span style="direction:ltr;display:inline-block">'+esc(Priv.show(e,'email'))+'</span>':'<span class="tag warn">'+svg('warn',11)+esc(I18N.t('noEmail'))+'</span>')+'</td>'
         +'<td>'+(Priv.hasValue(e,'phone')?'<span dir="ltr">'+esc(Priv.show(e,'phone'))+'</span>':'<span class="tag warn">'+esc(I18N.t('noPhone'))+'</span>')+'</td>'
@@ -2621,11 +2658,12 @@ const Engineers = {
     Data.save(); UI.closeModal(); UI.refreshAll(); UI.toast(I18N.t('saved')+' ('+n+')','ok',true);
   },
   edit(id){
-    const e=id?Data.eng(id):{id:'',name:'',dept:Data.state.depts[0]||'',email:'',phone:'',lang:'ar',active:true};
+    const e=id?Data.eng(id):{id:'',name:'',fullName:'',dept:Data.state.depts[0]||'',email:'',phone:'',lang:'ar',active:true};
     const depts=Data.state.depts;
     UI.modal({ title:id?I18N.t('editEngineer'):I18N.t('addEngineer'), icon:'engineers',
-      body:'<div class="fld"><label>'+esc(I18N.t('engName'))+' *</label><input id="fName" value="'+esc(e.name)+'" autofocus>'
-        +'<div class="hint">'+esc(I18N.t('fullNameHint'))+'</div></div>'
+      body:'<div class="grid2"><div class="fld"><label>'+esc(I18N.t('engName'))+' *</label><input id="fName" value="'+esc(e.name)+'" autofocus></div>'
+        +'<div class="fld"><label>'+esc(I18N.t('fullNameLbl'))+'</label><input id="fFull" value="'+esc(e.fullName||'')+'">'
+        +'</div></div><div class="hint" style="margin:-8px 0 12px">'+esc(I18N.t('fullNameHint2'))+'</div>'
         +'<div class="grid2"><div class="fld"><label>'+esc(I18N.t('dept'))+'</label><select id="fDept">'
           +depts.map(d=>'<option value="'+esc(d)+'"'+(d===e.dept?' selected':'')+'>'+esc(I18N.dept(d))+'</option>').join('')
           +'<option value="__new">+ '+esc(I18N.t('add'))+'…</option></select></div>'
@@ -2649,7 +2687,8 @@ const Engineers = {
     Data.snap('engineer');
     const em=$('#fMail').value.trim();
     const ph=($('#fPhone')?$('#fPhone').value.trim().replace(/[^0-9]/g,''):'');
-    const o={name, dept:$('#fDept').value, lang:$('#fLang').value, active:$('#fAct').checked};
+    const o={name, fullName:($('#fFull')?$('#fFull').value.trim():''),
+      dept:$('#fDept').value, lang:$('#fLang').value, active:$('#fAct').checked};
     let rec;
     if(id){ rec=Data.eng(id); Object.assign(rec,o); Data.state.history.push({id:uid('h'),ts:Date.now(),type:'engineer-edit',eng:id,note:name}); }
     else { rec=Object.assign({id:uid('e')},o); Data.state.engineers.push(rec); Data.ensureNos();
@@ -2856,7 +2895,7 @@ const Swap = {
 const Notify = {
   tpl(kind,eng,payload){
     const L=eng.lang==='en'?'en':'ar';
-    const nm=(L==='ar'?'م. ':'Eng. ')+eng.name;
+    const nm=(L==='ar'?'م. ':'Eng. ')+fullName(eng);
     const dstr=(()=>{ const d=parseISO(payload.date); const dn=T[L][DOWK[d.getDay()]], mn=T[L]['m'+d.getMonth()];
       return dn+' '+d.getDate()+' '+mn+' '+d.getFullYear(); })();
     if(kind==='reminder'){
@@ -2942,7 +2981,7 @@ const Notify = {
     else { const rows=Data.engs(true).map(e=>({e,v:Data.get(e.id,today)})).filter(r=>r.v);
       if(!rows.length) h+='<div class="empty-s">'+svg('cal')+'<p>'+esc(I18N.t('noShiftToday'))+'</p></div>';
       rows.forEach(r=>{ h+='<div class="ml-row"><span class="av">'+esc(initials(r.e.name))+'</span>'
-        +'<span class="info"><b>'+esc(r.e.name)+'</b><span>'+esc(I18N.dept(r.e.dept))+'</span></span>'
+        +'<span class="info"><b>'+esc(fullName(r.e))+'</b><span>'+esc(I18N.dept(r.e.dept))+'</span></span>'
         +'<span class="tag" style="background:var(--shift-'+r.v+'-bg);color:var(--shift-'+r.v+');border:1px solid var(--shift-'+r.v+'-bd);font-size:12px;padding:3px 10px">'+ST[r.v].lbl+' '+esc(shiftName(r.v))+' · '+shiftHours(r.v)+esc(I18N.t('hUnit'))+'</span></div>'; }); }
     h+='</div></div></div>';
     /* upcoming night */
@@ -2954,7 +2993,7 @@ const Notify = {
         : r.status==='no-email' ? '<span class="tag err">'+svg('warn',11)+esc(I18N.t('noEmailWarn'))+'</span>'
         : '<span class="tag ok">'+svg('clock',11)+esc(I18N.t('scheduled'))+'</span>';
       h+='<div class="ml-row"><span class="av">'+esc(initials(r.eng.name))+'</span>'
-        +'<span class="info"><b>'+esc(r.eng.name)+'</b><span>'+esc(dowName(r.date))+' '+esc(fmtShort(r.date))+' · '+esc(I18N.t('reminderLead'))+': '+r.sendAt.toLocaleString(I18N.lang==='ar'?'ar-EG':'en-GB',{dateStyle:'short',timeStyle:'short'})+'</span></span>'
+        +'<span class="info"><b>'+esc(fullName(r.eng))+'</b><span>'+esc(dowName(r.date))+' '+esc(fmtShort(r.date))+' · '+esc(I18N.t('reminderLead'))+': '+r.sendAt.toLocaleString(I18N.lang==='ar'?'ar-EG':'en-GB',{dateStyle:'short',timeStyle:'short'})+'</span></span>'
         +'<span class="tag" style="background:var(--shift-L-bg);color:var(--shift-L)">ل</span>'+tg
         +'<button class="tbtn" title="'+esc(I18N.t('preview'))+'" onclick="Notify.preview(\''+r.eng.id+'\',\''+r.date+'\')">'+svg('mail',13)+'</button>'
         +'<button class="tbtn" title="'+esc(I18N.t('icsDownload'))+'" onclick="ICS.download([Data.eng(\''+r.eng.id+'\')])">'+svg('cal',13)+'</button></div>';
@@ -3500,12 +3539,17 @@ const Publish = {
   snapshot(){
     const c=Data.cycle(), ds=Data.dates(), A=Data.A();
     Data.ensureNos();
-    /* engineer copies intentionally include phone and email contact details */
-    const engs=Data.engs(true).map(e=>({
-      id:e.id,no:e.no,name:e.name,dept:e.dept,active:true,
-      phone:(typeof Priv!=='undefined'?Priv.raw(e,'phone'):(e.phone||''))||'',
-      email:(typeof Priv!=='undefined'?Priv.raw(e,'email'):(e.email||''))||''
-    }));
+    /* Contact details leave the committee's machine ONLY if the admin
+       ticks the box in the publish dialog. Default is off. */
+    const withContacts = !!(Data.state.settings.pubContacts);
+    const engs=Data.engs(true).map(e=>{
+      const o={id:e.id,no:e.no,name:e.name,dept:e.dept,active:true};
+      if(withContacts){
+        o.phone=(Priv.raw(e,'phone')||'');
+        o.email=(Priv.raw(e,'email')||'');
+      }
+      return o;
+    });
     const assign={};
     engs.forEach(e=>{ const m=A[e.id]||{}, o={};
       ds.forEach(d=>{ if(m[d]) o[d]=m[d]; });
@@ -3534,7 +3578,14 @@ const Publish = {
         +'<div class="slg"><div class="v">'+ds.length+'</div><div class="l">'+esc(I18N.t('days'))+'</div></div>'
         +'<div class="slg"><div class="v">'+esc(Data.cycleName(c))+'</div><div class="l">'+esc(I18N.t('cycle'))+'</div></div></div>'
         +(noShift?'<div class="note w" style="margin-top:14px">'+svg('warn')+'<div>'+esc(I18N.t('wNoShifts'))+': '+noShift+'</div></div>':'')
-        +'<div class="note s" style="margin-top:14px">'+svg('check')+'<div>'+esc(I18N.t('publishPrivacy'))+'</div></div>',
+        +'<div class="card" style="margin-top:14px">'
+          +'<div class="setrow" style="border:none;padding:0"><div class="txt"><b>'+esc(I18N.t('pubContacts'))+'</b>'
+          +'<span>'+esc(I18N.t('pubContactsHint'))+'</span></div>'
+          +'<label class="sw"><input type="checkbox" '+(Data.state.settings.pubContacts?'checked':'')
+          +' onchange="Data.state.settings.pubContacts=this.checked;Data.save();Publish.open()"><span class="tr"></span></label></div></div>'
+        +(Data.state.settings.pubContacts
+           ? '<div class="note e" style="margin-top:12px">'+svg('warn')+'<div>'+esc(I18N.t('pubContactsWarn'))+'</div></div>'
+           : '<div class="note s" style="margin-top:12px">'+svg('check')+'<div>'+esc(I18N.t('publishPrivacy'))+'</div></div>'),
       footer:'<button class="btn btn-g" onclick="UI.closeModal()">'+esc(I18N.t('cancel'))+'</button>'
         +'<button class="btn btn-p" onclick="Publish.download()">'+svg('down',14)+esc(I18N.t('publishNow'))+'</button>'});
   },
@@ -4249,7 +4300,7 @@ const Send = {
 
   personal(e){
     const L=this.L(e), st=Data.stats(e.id);
-    let s=this.head(e)+'\n\n'+(L==='ar'?'م. ':'Eng. ')+e.name+' — '
+    let s=this.head(e)+'\n\n'+(L==='ar'?'م. ':'Eng. ')+fullName(e)+' — '
       +(L==='ar'?'إدارة ':'Dept. ')+(L==='en'?(DEPT_EN[e.dept]||e.dept):e.dept)+'\n';
     if(!st.total) return s+'\n'+this.S(e,'noShiftsMsg')+this.foot(e);
     s+='\n'+this.S(e,'yourShifts')+':\n';
@@ -4328,7 +4379,7 @@ const Send = {
       + (this.dept?all.filter(e=>e.dept===this.dept):all).map(e=>{
           const r=reach(e);
           return '<div class="ml-row"><span class="av">'+esc(initials(e.name))+'</span>'
-            +'<span class="info"><b>'+esc(e.name)+'</b><span>'+esc(I18N.dept(e.dept))
+            +'<span class="info"><b>'+esc(fullName(e))+'</b><span>'+esc(I18N.dept(e.dept))
             +' · '+(this.channel==='wa'?(Priv.hasValue(e,'phone')?'<span dir="ltr">'+esc(Priv.show(e,'phone'))+'</span>':'<b style="color:var(--warn)">'+esc(I18N.t('noPhone'))+'</b>')
                                        :(Priv.hasValue(e,'email')?'<span dir="ltr">'+esc(Priv.show(e,'email'))+'</span>':'<b style="color:var(--warn)">'+esc(I18N.t('noEmail'))+'</b>'))
             +'</span></span>'
@@ -4675,8 +4726,8 @@ const ICS = {
       this.eventsFor(e).forEach(d=>{
         n++;
         const uid='we-'+Data.state.activeCycle+'-'+e.id+'-'+d+'@middledelta.we';
-        const nm=(e.lang==='en'?'Eng. ':'م. ')+e.name;
-        const title=(e.lang==='en'?'Night shift (ل) — ':'وردية ليلية (ل) — ')+e.name;
+        const nm=(e.lang==='en'?'Eng. ':'م. ')+fullName(e);
+        const title=(e.lang==='en'?'Night shift (ل) — ':'وردية ليلية (ل) — ')+fullName(e);
         const desc=(e.lang==='en'
           ? 'Unified Shift Roster – Middle Delta Engineers\\nEngineer: '+nm+'\\nShift: ل — Night ('+dur+'h)\\nDept.: '+(DEPT_EN[e.dept]||e.dept)
           : 'الوردية الموحدة لمهندسين وسط الدلتا\\nالمهندس: '+nm+'\\nالوردية: ل — ليلية ('+dur+' ساعة)\\nالإدارة: '+e.dept)
@@ -5142,7 +5193,8 @@ const UI = {
   setTimeout(()=>{ try{ if(innerWidth>1100 && !localStorage.getItem('we_fit_once')){ localStorage.setItem('we_fit_once','1'); Roster.fit(); } }catch(e){} },250);
   let rt; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if(Roster.fitOn){Roster.fitOn=false;Roster.fit();} else Roster.render(); },220); });
   addEventListener('beforeunload',()=>Data.saveNow());
-  window.WE={Data,Roster,UI,I18N,IO,Side,Swap,Pop,Notify,Stats,Engineers,Cycles,History,Settings,Chart,T,SEED,normName,initials,deptColor,Publish,Requests,SwapCode,Auth,EngMode,Send,gateScene,GateBG,HQ_PHOTO,ICS,Priv,COMMITTEE_SEED,COMMITTEE_LIST,Committee,pinHash,
+  window.WE={Data,Roster,UI,I18N,IO,Side,Swap,Pop,Notify,Stats,Engineers,Cycles,History,Settings,Chart,T,SEED,normName,initials,deptColor,Publish,Requests,SwapCode,Auth,EngMode,Send,gateScene,GateBG,HQ_PHOTO,ICS,Priv,
+    CONTACTS,applyContacts,fullName,shortName,COMMITTEE_SEED,COMMITTEE_LIST,Committee,pinHash,
     SHIFT_TYPES,SK,ST,DUTY_K,LEAVE_K,shiftHours,shiftName,shiftFull,DEF_HOURS};
   const _d=Data.findDups();
   if(_d.length){ const ex=_d.some(g=>g.exact);
